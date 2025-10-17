@@ -1,18 +1,18 @@
-/*
+﻿/*
 *********************************************************************************************************
 *
-*	ģ������   :   �洢����ع���ͷ�ļ�
-*	�ļ�����   :   tMemBlock.h
-*	��    ��   :   V1.0
-*	˵    ��   :   ����洢�����ݽṹ���洢����Ϣ���ݽṹ���ṩ�洢���ʼ����
-*                �ȴ����д洢���������д洢������洢����ز���API
+*	模块名称   :   存储块相关功能头文件
+*	文件名称   :   tMemBlock.h
+*	版    本   :   V1.0
+*	说    明   :   定义存储块数据结构，存储块信息数据结构，提供存储块初始化，
+*                等待空闲存储区，将空闲存储区放入存储块相关操作API
 *
-*	�޸ļ�¼   :
-*		             �汾��     ����         ����            ˵��
-*		              V1.0    2019-4-16      Solar           ��һ�ΰ汾����
+*	修改记录   :
+*		             版本号     日期         作者            说明
+*		              V1.0    2019-4-16      Solar           第一次版本发布
 *		              
 *
-*	��Ȩ       ��  ����ѧϰ����ʹ�ã���ֹ������ҵ��;
+*	版权       ：  仅限学习交流使用，禁止用于商业用途
 *
 *********************************************************************************************************
 */
@@ -24,26 +24,26 @@
 #include "tList.h"
 #include "tEvent.h"
 
-/*------�����洢�����ݽṹ------*/
+/*------定长存储块数据结构------*/
 typedef struct _tMemBlock
 {
-	tEvent event;                                    /* ECB,���ڹ����������                                     */
-	void *memStart;                                  /* �ڴ�����ʼ��ַ                                         */
-	uint32_t blockSize;                              /* �����ڴ��Ĵ�С                                         */
-	uint32_t blockCnt;                               /* �ڴ�������                                             */
-	tList blockList;                                 /* �������ڴ�������������������й���                       */
+	tEvent event;                                    /* ECB,用于管理任务队列                                     */
+	void *memStart;                                  /* 内存块的起始地址                                         */
+	uint32_t blockSize;                              /* 单个内存块的大小                                         */
+	uint32_t blockCnt;                               /* 内存块的数量                                             */
+	tList blockList;                                 /* 将各个内存块用链表链接起来进行管理                       */
 }tMemBlock;
 
-/*------�洢����Ϣ���ݽṹ------*/
+/*------存储块信息数据结构------*/
 typedef struct _tMemBlockInfo
 {
-	uint32_t BlockCnt;                               /* ���ô洢�������                                         */
-  uint32_t maxBlockCnt;                            /* ���Ĵ洢�������                                       */
-	uint32_t blockSize;                              /* �����洢��Ĵ�С                                         */
-	uint32_t taskCount;                              /* �ȴ��洢������������                                   */
+	uint32_t BlockCnt;                               /* 可用存储块的数量                                         */
+  uint32_t maxBlockCnt;                            /* 最大的存储块的数量                                       */
+	uint32_t blockSize;                              /* 单个存储块的大小                                         */
+	uint32_t taskCount;                              /* 等待存储块的任务的数量                                   */
 }tMemBlockInfo;
 
-/*------�����洢���ʼ�����ȴ������ѵ�API------*/
+/*------定长存储块初始化、等待、唤醒等API------*/
 void tMemBlockInit(tMemBlock *memBlock, uint8_t *memStart, uint32_t blockSize, uint32_t blockCnt);
 uint32_t tMemBlockWait(tMemBlock *memBlock, uint8_t **mem, uint32_t waitTicks);
 uint32_t tMemBlockNoWaitGet(tMemBlock *memBlock, uint8_t **mem);

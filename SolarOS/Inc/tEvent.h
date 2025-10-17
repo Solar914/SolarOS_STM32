@@ -1,18 +1,18 @@
-/*
+ï»¿/*
 *********************************************************************************************************
 *
-*	Ä£¿éÃû³Æ   :   ÊÂ¼ş¿ØÖÆ¿éÏà¹Ø¹¦ÄÜÍ·ÎÄ¼ş
-*	ÎÄ¼şÃû³Æ   :   tEvent.h
-*	°æ    ±¾   :   V1.0
-*	Ëµ    Ã÷   :   ¶¨ÒåÊÂ¼ş¿ØÖÆ¿éÊı¾İ½á¹¹¡¢ÊÂ¼şÀàĞÍÊı¾İ½á¹¹£¬Ìá¹©ECB³õÊ¼»¯£¬ECB
-*                µÈ´ı£¬ECB»½ĞÑÏà¹Ø²Ù×÷API
+*	æ¨¡å—åç§°   :   äº‹ä»¶æ§åˆ¶å—ç›¸å…³åŠŸèƒ½å¤´æ–‡ä»¶
+*	æ–‡ä»¶åç§°   :   tEvent.h
+*	ç‰ˆ    æœ¬   :   V1.0
+*	è¯´    æ˜   :   å®šä¹‰äº‹ä»¶æ§åˆ¶å—æ•°æ®ç»“æ„ã€äº‹ä»¶ç±»å‹æ•°æ®ç»“æ„ï¼Œæä¾›ECBåˆå§‹åŒ–ï¼ŒECB
+*                ç­‰å¾…ï¼ŒECBå”¤é†’ç›¸å…³æ“ä½œAPI
 *
-*	ĞŞ¸Ä¼ÇÂ¼   :
-*		             °æ±¾ºÅ     ÈÕÆÚ         ×÷Õß            ËµÃ÷
-*		              V1.0    2019-4-16      Solar           µÚÒ»´Î°æ±¾·¢²¼
+*	ä¿®æ”¹è®°å½•   :
+*		             ç‰ˆæœ¬å·     æ—¥æœŸ         ä½œè€…            è¯´æ˜
+*		              V1.0    2019-4-16      Solar           ç¬¬ä¸€æ¬¡ç‰ˆæœ¬å‘å¸ƒ
 *		              
 *
-*	°æÈ¨       £º  ½öÏŞÑ§Ï°½»Á÷Ê¹ÓÃ£¬½ûÖ¹ÓÃÓÚÉÌÒµÓÃÍ¾
+*	ç‰ˆæƒ       ï¼š  ä»…é™å­¦ä¹ äº¤æµä½¿ç”¨ï¼Œç¦æ­¢ç”¨äºå•†ä¸šç”¨é€”
 *
 *********************************************************************************************************
 */
@@ -23,35 +23,35 @@
 #include "tList.h"
 #include "tTask.h"
 
-/*------´íÎóÂëÊı¾İ½á¹¹------*/
+/*------é”™è¯¯ç æ•°æ®ç»“æ„------*/
 typedef enum _tError
 {
-	tErrorNoError = 0,                                     /* Ã»ÓĞ´íÎó                                          */
-	tErrorTimeout,                                         /* ³¬Ê±´íÎó                                          */
-	tErrorResourceUnavaliable,                             /* ÎŞ×ÊÔ´¿ÉÓÃ                                        */
-	tErrorDel,                                             /* ±»É¾³ı                                            */
-	tErrorResourceFull,                                    /* ×ÊÔ´Âú                                            */
+	tErrorNoError = 0,                                     /* æ²¡æœ‰é”™è¯¯                                          */
+	tErrorTimeout,                                         /* è¶…æ—¶é”™è¯¯                                          */
+	tErrorResourceUnavaliable,                             /* æ— èµ„æºå¯ç”¨                                        */
+	tErrorDel,                                             /* è¢«åˆ é™¤                                            */
+	tErrorResourceFull,                                    /* èµ„æºæ»¡                                            */
 }tError;
 
-/*------ÊÂ¼şÀàĞÍÊı¾İ½á¹¹------*/
+/*------äº‹ä»¶ç±»å‹æ•°æ®ç»“æ„------*/
 typedef enum _tEventType
 { 
-	tEventTypeUnknown = 0,                                 /* Î´ÖªÀàĞÍ                                          */
-	tEventTypeSem,                                         /* ĞÅºÅÁ¿                                            */
-	tEventTypeMbox,                                        /* ÓÊÏä                                              */
-	tEventTypeMemBlock,                                    /* ´æ´¢¿é                                            */
-	tEventTypeFlagGroup,                                   /* ÊÂ¼ş±êÖ¾×é                                        */
-	tEventTypeMutex,                                       /* »¥³âĞÅºÅÁ¿                                        */
+	tEventTypeUnknown = 0,                                 /* æœªçŸ¥ç±»å‹                                          */
+	tEventTypeSem,                                         /* ä¿¡å·é‡                                            */
+	tEventTypeMbox,                                        /* é‚®ç®±                                              */
+	tEventTypeMemBlock,                                    /* å­˜å‚¨å—                                            */
+	tEventTypeFlagGroup,                                   /* äº‹ä»¶æ ‡å¿—ç»„                                        */
+	tEventTypeMutex,                                       /* äº’æ–¥ä¿¡å·é‡                                        */
 }tEventType;
 
-/*------ECBÊı¾İ½á¹¹------*/
+/*------ECBæ•°æ®ç»“æ„------*/
 typedef struct _tEvent
 {
-	tEventType type;                                       /* ÊÂ¼şÀàĞÍ                                          */
-	tList waitList;                                        /* ÈÎÎñµÈ´ı¶ÓÁĞ                                      */
+	tEventType type;                                       /* äº‹ä»¶ç±»å‹                                          */
+	tList waitList;                                        /* ä»»åŠ¡ç­‰å¾…é˜Ÿåˆ—                                      */
 }tEvent;
 
-/*------ECB³õÊ¼»¯¡¢µÈ´ı¡¢»½ĞÑµÈAPI------*/
+/*------ECBåˆå§‹åŒ–ã€ç­‰å¾…ã€å”¤é†’ç­‰API------*/
 void tEventInit(tEvent *event, tEventType type);
 void tEventWait(tEvent *event, tTask *task, void *msg, uint32_t eventType, uint32_t timeOut);
 tTask *tEventWakeUp(tEvent *event, void *msg, uint32_t result);
