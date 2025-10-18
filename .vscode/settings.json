@@ -1,0 +1,29 @@
+{
+    "clangd.arguments": [
+        "--compile-commands-dir=build",
+        "--background-index",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu"
+    ],
+    "clangd.fallbackFlags": [
+        "--target=arm-none-eabi",
+        "-mcpu=cortex-m3",
+        "-mthumb",
+        "-DARMCM3",
+        "-D__CORTEX_M=3",
+        "-D__ARM_ARCH_7M__=1",
+        "-D__CC_ARM=1",
+        "-fno-ms-extensions",
+        "-fno-ms-compatibility"
+    ],
+    "C_Cpp.intelliSenseEngine": "Disabled",
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    },
+    "solaros.build": {
+        "projectFile": "soalrOS.uvprojx",
+        "buildDir": "build",
+        "note": "Tool paths are auto-detected by build.bat. Set UVCONVERTOR_PATH and KEIL_PATH environment variables if needed."
+    }
+}
